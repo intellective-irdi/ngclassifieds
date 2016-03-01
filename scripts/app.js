@@ -3,7 +3,7 @@
   "use strict";
 
   angular
-    .module('ngClassifieds', ['ngMaterial', 'ui.router'])
+    .module('ngClassifieds', ['ngMaterial', 'ui.router', 'firebase'])
     .config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
       $mdThemingProvider.theme('default')
@@ -28,7 +28,7 @@
           templateUrl: 'components/classifieds/edit/classifieds.edit.tpl.html',
           controller: 'editClassifiedsController as vm',
           params: {
-            classified: null
+            id: null
           }
         });
     });

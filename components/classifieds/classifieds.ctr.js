@@ -4,24 +4,20 @@
 
   angular
     .module('ngClassifieds')
-    .controller('classifiedsController', function($scope, $mdToast, $mdSidenav, $mdDialog, $state, $stateParams, classifiedsFactory) {
+    .controller('classifiedsController', function($scope, $mdSidenav, $mdDialog, $state, $mdToast, classifiedsFactory) {
 
       var vm = this;
 
       vm.openSidebar = openSidebar;
-      vm.editClassified = editClassified;
-      vm.deleteClassified = deleteClassified;
-      vm.showSearchBar = false;
       vm.showFilters = false;
 
-      classifiedsFactory.getClassifieds().then(function(data) {
-        vm.classifieds = data.data;
-        vm.categories = getCategories(vm.classifieds);
+      vm.classifieds = classifiedsFactory.ref;
+      vm.classifieds.$loaded().then(function(classifieds) {
+        vm.categories = getCategories(classifieds);
       });
 
       $scope.$on('newClassified', function(event, data) {
-        data.id = vm.classifieds.length + 1;
-        vm.classifieds.push(data);
+        vm.classifieds.$add(data);
         showToast('Classified Saved');
       });
 
@@ -43,29 +39,6 @@
       function openSidebar() {
         vm.sidebarTitle = 'Add a Classified';
         $state.go('classifieds.new');
-      }
-
-      function editClassified(classified) {
-        vm.editing = true;
-        vm.sidebarTitle = 'Edit Classified';
-        vm.classified = classified;
-        $state.go('classifieds.edit', { id: classified.id, classified: classified });
-      }
-
-      function deleteClassified(event, classified) {
-        var confirm = $mdDialog.confirm()
-            .title('Are you sure you want to delete ' + classified.title + '?')
-            .targetEvent(event)
-            .ok('Yes')
-            .cancel('No');
-        $mdDialog.show(confirm).then(function() {
-          console.log(event);
-          var index = vm.classifieds.indexOf(classified);
-          vm.classifieds.splice(index, 1);
-          showToast('Classified Deleted');
-        }, function() {
-          vm.status = classified.title + ' is still here.';
-        });
       }
 
       function getCategories(classifieds) {
