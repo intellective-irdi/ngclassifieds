@@ -40,7 +40,7 @@
 
       <md-button 
         ng-click="showAdmin = true"
-        ng-show="!showAdmin">
+        ng-show="!showAdmin && classified.user_id === vm.auth.user.uid">
         Admin
       </md-button>
 

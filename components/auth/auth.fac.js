@@ -1,17 +1,18 @@
 (function() {
-
+  
   "use strict";
-
+  
   angular
     .module('ngClassifieds')
-    .factory('classifiedsFactory', function($firebaseArray) {
-
+    .factory('auth', function($firebaseAuth) {
+        
       var ref = new Firebase('https://ngclassifieds.firebaseio.com/');
-
+    
       return {
-        ref: $firebaseArray(ref)
+        ref: $firebaseAuth(ref),
+        user: ref.getAuth()
       }
       
     });
-    
+  
 })();

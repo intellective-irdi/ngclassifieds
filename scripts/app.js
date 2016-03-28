@@ -13,6 +13,11 @@
       $urlRouterProvider.otherwise('/classifieds');
 
       $stateProvider
+        .state('auth', {
+          url: '/auth',
+          templateUrl: 'components/auth/auth.tpl.html',
+          controller: 'authController as vm'
+        })
         .state('classifieds', {
           url: '/classifieds',
           templateUrl: 'components/classifieds/classifieds.tpl.html',

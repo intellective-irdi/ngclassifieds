@@ -4,16 +4,25 @@
 
   angular
     .module('ngClassifieds')
-    .controller('classifiedsController', function($scope, $mdSidenav, $mdDialog, $state, $mdToast, classifiedsFactory) {
+    .controller('classifiedsController', function(auth, $scope, $mdSidenav, $mdDialog, $state, $mdToast, classifiedsFactory) {
 
       var vm = this;
 
       vm.openSidebar = openSidebar;
       vm.showFilters = false;
-
+      
+      vm.auth = auth.ref;
+      
+      // This is the async way of getting the
+      // current user's auth data
+      auth.ref.$onAuth(function(authData) {
+        vm.authData = authData;
+      });
+      
       vm.classifieds = classifiedsFactory.ref;
       vm.classifieds.$loaded().then(function(classifieds) {
         vm.categories = getCategories(classifieds);
+        console.log(classifieds);
       });
 
       $scope.$on('newClassified', function(event, data) {

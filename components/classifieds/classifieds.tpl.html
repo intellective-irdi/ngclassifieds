@@ -3,7 +3,7 @@
     
     <p><strong>ngClassifieds</strong></p>
     
-    <md-button ng-click="vm.openSidebar()">
+    <md-button ng-click="vm.openSidebar()" ng-if="vm.authData">
       <md-icon class="mdi mdi-plus-circle"></md-icon>
       New Classified
     </md-button>
@@ -12,9 +12,27 @@
       <md-icon class="mdi mdi-magnify"></md-icon>
       Filters
     </md-button>
+    
+    <span flex></span>
+    
+    <md-button ui-sref="auth" ng-if="!vm.authData">
+      <md-icon class="mdi mdi-account"></md-icon>
+      Login
+    </md-button>
+    
+    <div ng-if="vm.authData">
+      <md-button ui-sref="auth" ng-click="vm.auth.$unauth()">      
+        Logout       
+      </md-button>
+      <img flex-align="center start" ng-src="{{ vm.authData.password.profileImageURL }}" class="profile-image" alt="Profile Image" />  
+    </div>
+    
+
 
   </div>
 </md-toolbar>
+
+<pre>{{ vm.authStuff }}</pre>
 
 <div class="filters" layout="row" layout-align="center center" ng-show="vm.showFilters">
   <!--  We're working locally with our models here. They don't interact

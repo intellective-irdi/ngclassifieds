@@ -4,7 +4,7 @@
 
   angular
     .module('ngClassifieds')
-    .controller('newClassifiedsController', function($state, $scope, $mdSidenav, $mdDialog, $timeout, classifiedsFactory) {
+    .controller('newClassifiedsController', function(auth, $state, $scope, $mdSidenav, $mdDialog, $timeout, classifiedsFactory) {
 
       var vm = this;
 
@@ -45,7 +45,7 @@
         $scope.sidenavOpen = false;        
       }
 
-      function saveClassified(classified) {
+      function saveClassified(classified, userId) {
         if(classified) {
 
           classified.contact = {
@@ -53,7 +53,9 @@
             phone: "(555) 555-5555",
             email: "ryanchenkie@gmail.com"
           }
-
+          
+          classified.user_id = auth.user.uid;
+          
           $scope.$emit('newClassified', classified)          
           $scope.sidenavOpen = false;
         }

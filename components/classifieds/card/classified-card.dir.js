@@ -16,12 +16,13 @@
         controllerAs: 'vm'
       }
 
-      function classifiedCardController($scope, $state, $mdDialog) {
+      function classifiedCardController(auth, $scope, $state, $mdDialog) {
 
         var vm = this;
 
         vm.editClassified = editClassified;
         vm.deleteClassified = deleteClassified;
+        vm.auth = auth;
 
         function editClassified(classified) {
           vm.editing = true;

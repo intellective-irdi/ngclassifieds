@@ -4,7 +4,12 @@ md-card img {
   min-height: 0px;
 }
 
-button .material-icons {
+.profile-image {
+  border-radius: 50%;
+  width: 35px;
+}
+
+.material-icons {
   margin-top: 7px;
 }
 
